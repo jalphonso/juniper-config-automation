@@ -1,0 +1,20 @@
+image:
+  name: juniper/pyez-ansible
+  entrypoint: [""]
+stages:
+  - deploy
+deploy_config:
+  stage: deploy
+  tags:
+    - ansible
+  before_script:
+    - export ANSIBLE_NET_USERNAME=$ANSIBLE_NET_USERNAME
+    - export ANSIBLE_NET_PASSWORD=$ANSIBLE_NET_PASSWORD
+    - chmod 775 .
+  script:
+    - set -x
+    - pwd
+    - ls -l
+    - mkdir configs output
+    - ansible-playbook -i hosts update_prefix_list.pb.yml
+  allow_failure: false
